@@ -1,0 +1,3 @@
+ALTER TABLE public.social_links
+  ADD COLUMN IF NOT EXISTS label TEXT,
+  ADD COLUMN IF NOT EXISTS icon_url TEXT;

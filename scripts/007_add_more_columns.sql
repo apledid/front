@@ -1,0 +1,6 @@
+-- Add more missing columns
+ALTER TABLE public.profiles 
+ADD COLUMN IF NOT EXISTS cursor_effect TEXT DEFAULT 'none',
+ADD COLUMN IF NOT EXISTS show_views BOOLEAN DEFAULT true,
+ADD COLUMN IF NOT EXISTS glow_color TEXT DEFAULT '#06b6d4',
+ADD COLUMN IF NOT EXISTS card_opacity DECIMAL DEFAULT 0.15;

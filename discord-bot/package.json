@@ -1,0 +1,22 @@
+{
+  "name": "halo-discord-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "start:local": "node --env-file=.env src/index.js",
+    "dev": "node --watch --env-file=.env src/index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "discord.js": "^14.16.3",
+    "node-cron": "^3.0.3"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  }
+}

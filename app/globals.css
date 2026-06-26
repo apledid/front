@@ -1,0 +1,642 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ── Neutral surfaces (warm near-black ramp) ── */
+  --background: #08080a;
+  --foreground: #f4f4f7;
+  --foreground-secondary: rgba(244, 244, 247, 0.68);
+  --card: #0d0d11;
+  --card-foreground: #f4f4f7;
+  --popover: #101016;
+  --popover-foreground: #f4f4f7;
+  --secondary: #131318;
+  --secondary-foreground: #f4f4f7;
+  --muted: #18181e;
+  --muted-foreground: rgba(244, 244, 247, 0.46);
+  --surface: #0d0d11;
+  --surface-2: #131318;
+  --surface-3: #1a1a21;
+
+  /* ── Accent (pink) ── */
+  --primary: #e87fa0;
+  --primary-foreground: #1a0810;
+  --accent: #e87fa0;
+  --accent-foreground: #1a0810;
+  --accent-soft: rgba(232, 127, 160, 0.12);
+  --accent-ring: rgba(232, 127, 160, 0.42);
+
+  /* ── Feedback ── */
+  --destructive: #e5484d;
+  --destructive-foreground: #f4f4f7;
+
+  /* ── Lines & inputs ── */
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --input: #131318;
+  --ring: #e87fa0;
+
+  /* ── Charts ── */
+  --chart-1: #e87fa0;
+  --chart-2: #f0a4bd;
+  --chart-3: #c77a99;
+  --chart-4: #8b6f9e;
+  --chart-5: #6f8bbd;
+
+  /* ── Sidebar ── */
+  --sidebar: #0a0a0d;
+  --sidebar-foreground: #f4f4f7;
+  --sidebar-primary: #e87fa0;
+  --sidebar-primary-foreground: #1a0810;
+  --sidebar-accent: #131318;
+  --sidebar-accent-foreground: #f4f4f7;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #e87fa0;
+
+  /* ── Misc ── */
+  --glow: rgba(232, 127, 160, 0.35);
+  --radius: 0.875rem;
+
+  /* ── Type families ── */
+  --font-display: var(--font-space-grotesk), 'Space Grotesk', system-ui, sans-serif;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur: 180ms;
+  --dur-slow: 280ms;
+}
+
+.dark {
+  --background: #08080a;
+  --foreground: #f4f4f7;
+  --foreground-secondary: rgba(244, 244, 247, 0.68);
+  --card: #0d0d11;
+  --card-foreground: #f4f4f7;
+  --popover: #101016;
+  --popover-foreground: #f4f4f7;
+  --secondary: #131318;
+  --secondary-foreground: #f4f4f7;
+  --muted: #18181e;
+  --muted-foreground: rgba(244, 244, 247, 0.46);
+  --surface: #0d0d11;
+  --surface-2: #131318;
+  --surface-3: #1a1a21;
+  --primary: #e87fa0;
+  --primary-foreground: #1a0810;
+  --accent: #e87fa0;
+  --accent-foreground: #1a0810;
+  --accent-soft: rgba(232, 127, 160, 0.12);
+  --accent-ring: rgba(232, 127, 160, 0.42);
+  --destructive: #e5484d;
+  --destructive-foreground: #f4f4f7;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --input: #131318;
+  --ring: #e87fa0;
+  --chart-1: #e87fa0;
+  --chart-2: #f0a4bd;
+  --chart-3: #c77a99;
+  --chart-4: #8b6f9e;
+  --chart-5: #6f8bbd;
+  --sidebar: #0a0a0d;
+  --sidebar-foreground: #f4f4f7;
+  --sidebar-primary: #e87fa0;
+  --sidebar-primary-foreground: #1a0810;
+  --sidebar-accent: #131318;
+  --sidebar-accent-foreground: #f4f4f7;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #e87fa0;
+  --glow: rgba(232, 127, 160, 0.35);
+  --radius: 0.875rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), 'Space Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* New semantic tokens (refined system) */
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-border-strong: var(--border-strong);
+  --color-accent-soft: var(--accent-soft);
+  --font-display: var(--font-display);
+
+  /* Tokenized type scale (named styles, no collision with Tailwind defaults) */
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--font-weight: 600;
+  --text-h4: 1.125rem;
+  --text-h4--line-height: 1.35;
+  --text-h4--letter-spacing: -0.006em;
+  --text-h4--font-weight: 600;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.012em;
+  --text-h3--font-weight: 600;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.018em;
+  --text-h2--font-weight: 600;
+  --text-h1: clamp(2rem, 1.2rem + 2.6vw, 2.75rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.022em;
+  --text-h1--font-weight: 700;
+  --text-display: clamp(2.6rem, 1.2rem + 5vw, 4.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 700;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom Animations */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ping-pong horizontal scroll for the Time widget's meta row when it
+   overflows the card. --scroll-dx is the negative overflow distance, set
+   inline by the widget once it measures the content vs container width. */
+@keyframes widgetScrollPingPong {
+  0%, 12% { transform: translateX(0); }
+  48%, 58% { transform: translateX(var(--scroll-dx, 0)); }
+  94%, 100% { transform: translateX(0); }
+}
+
+/* Rainbow drop-shadow companion to the `gradient` animation above.
+   Cycles a soft halo through the same rainbow stops so a username
+   with `effect=rainbow` and `glow_username=true` reads as a real
+   rainbow glow, not a static accent-coloured shadow. The two
+   animations share a 2.4s period so the shadow stays in phase with
+   the text gradient. */
+@keyframes rainbow-glow {
+  0%   { filter: drop-shadow(0 0 16px rgba(255, 23, 68, 0.85))  saturate(2.4) brightness(1.28); }
+  16%  { filter: drop-shadow(0 0 16px rgba(255, 109, 0, 0.85))  saturate(2.4) brightness(1.28); }
+  33%  { filter: drop-shadow(0 0 16px rgba(255, 214, 0, 0.85))  saturate(2.4) brightness(1.28); }
+  50%  { filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.85))  saturate(2.4) brightness(1.28); }
+  66%  { filter: drop-shadow(0 0 16px rgba(41, 121, 255, 0.85)) saturate(2.4) brightness(1.28); }
+  83%  { filter: drop-shadow(0 0 16px rgba(124, 77, 255, 0.85)) saturate(2.4) brightness(1.28); }
+  100% { filter: drop-shadow(0 0 16px rgba(255, 23, 68, 0.85))  saturate(2.4) brightness(1.28); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px currentColor; }
+  50% { box-shadow: 0 0 40px currentColor, 0 0 60px currentColor; }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 50% { border-color: transparent; }
+  51%, 100% { border-color: currentColor; }
+}
+
+/* ─── Global polish: smoother scrolling, focus, scrollbar ─── */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent rogue elements from pushing the viewport wider than the screen */
+  overflow-x: hidden;
+  /* Stop iOS from auto-zooming when users tap inputs - fonts already 16px+ */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  /* Account for iOS safe-area insets so content never tucks behind notch/home bar */
+  padding-bottom: env(safe-area-inset-bottom);
+  /* Smooth touch scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Anything inside the body should respect the viewport width */
+*,
+*::before,
+*::after {
+  /* Belt-and-suspenders: make sure nothing breaks the box model */
+  min-width: 0;
+}
+
+/* Make sure media never overflows its container by default */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* Touch-friendly tap targets on mobile - native buttons & links */
+@media (max-width: 768px) {
+  button, [role="button"], a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Inputs at 16px+ to stop iOS from zooming the page on focus */
+  input, select, textarea {
+    font-size: max(16px, 0.95rem);
+  }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 200ms ease;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(232, 127, 160, 0.35); background-clip: padding-box; border: 2px solid transparent; }
+
+* { transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); transition-duration: 180ms; }
+
+button, a, [role="button"] { transition-duration: 200ms; }
+
+input, textarea, select { transition-duration: 140ms; }
+
+/* Focus ring polish - softer & accent-tinted */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(232, 127, 160, 0.45), 0 0 0 4px rgba(232, 127, 160, 0.12);
+  border-radius: 0.5rem;
+}
+
+/* Subtle button press */
+button:active:not(:disabled) { transform: translateY(0.5px) scale(0.985); }
+
+@keyframes haloRainbow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes haloGlitch {
+  0%, 100% { transform: translate(0); text-shadow: 0 0 0 transparent; }
+  20% { transform: translate(-1.5px, 1px); text-shadow: 1.5px 0 #ff5757, -1.5px 0 #54a0ff; }
+  40% { transform: translate(1px, -1px); text-shadow: -1.5px 0 #ff5757, 1.5px 0 #54a0ff; }
+  60% { transform: translate(-1px, 1.5px); text-shadow: 1px 0 #ff9f43, -1px 0 #1dd1a1; }
+  80% { transform: translate(1px, -1px); text-shadow: 0 0 0 transparent; }
+}
+
+@keyframes haloWave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes haloTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes haloBlink {
+  0%, 50% { border-color: transparent; }
+  51%, 100% { border-color: rgba(255,255,255,0.6); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Profile hover tooltips (UID pill, badge name). Plain opacity fade so
+   the inline translate(-50%,-100%) centering transform stays intact. */
+@keyframes haloTipIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cursor-trail {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.4); }
+}
+
+.animate-gradient { animation: gradient 8s ease infinite; background-size: 200% 200%; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+.animate-shimmer { animation: shimmer 2s linear infinite; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; }
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+.animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
+/* Entrance animations: no `forwards` so we don't keep a residual transform after
+   the animation ends - that residual transform would create a containing block
+   on a parent of the blurred profile card and break its backdrop-filter sampling. */
+.animate-fade-in { animation: fade-in 0.6s ease-out; }
+.animate-slide-up { animation: slide-up 0.6s ease-out; }
+.animate-scale-in { animation: scale-in 0.5s ease-out; }
+.animate-bounce-in { animation: bounce-in 0.6s ease-out; }
+.animate-cursor-trail { animation: cursor-trail 0.5s ease-out forwards; }
+.animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Glow Effects */
+.glow { box-shadow: 0 0 20px var(--primary); }
+.glow-sm { box-shadow: 0 0 10px var(--primary); }
+.glow-lg { box-shadow: 0 0 40px var(--primary); }
+.text-glow { text-shadow: 0 0 10px currentColor; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.06); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* Selection */
+::selection { background: var(--primary); color: var(--primary-foreground); }
+
+/* Hide scrollbars */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Custom cursor */
+.custom-cursor-active { cursor: none !important; }
+.custom-cursor-active * { cursor: none !important; }
+
+/* Text animations */
+@keyframes wave-text {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.95; }
+  12% { opacity: 0.4; }
+  14% { opacity: 1; }
+  46% { opacity: 0.9; }
+  48% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@keyframes shake-x {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
+}
+
+@keyframes typewriter-loop {
+  0% { width: 0; }
+  45% { width: 100%; }
+  70% { width: 100%; }
+  100% { width: 0; }
+}
+
+.animate-wave-text { animation: wave-text 1.6s ease-in-out infinite; }
+.animate-neon-flicker { animation: neon-flicker 2.6s ease-in-out infinite; }
+.animate-shake-x { animation: shake-x 0.45s steps(2, end) infinite; }
+.animate-typewriter-loop { display: inline-block; animation: typewriter-loop 4s steps(24, end) infinite, blink 1s step-end infinite; }
+
+.glitch-text { position: relative; }
+.glitch-text::before,
+.glitch-text::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; }
+.glitch-text::before { transform: translate(-1px, 0); color: rgba(255, 0, 140, 0.7); mix-blend-mode: screen; }
+.glitch-text::after { transform: translate(1px, 0); color: rgba(0, 220, 255, 0.7); mix-blend-mode: screen; }
+
+/* Hover card effects
+   IMPORTANT: We avoid filter: on the hover wrapper because applying filter to a
+   parent element breaks backdrop-filter on its children (the glass card) in Chrome
+   and Safari - the card disappears.  We also avoid setting transform on the base
+   (non-hover) state so we don't accidentally create a compositing layer that hides
+   backdrop-filter on child elements.
+   Solution: use box-shadow for glow effects - rendered outside the stacking context
+   and has NO effect on backdrop-filter children. */
+.hover-lift-card  { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.hover-scale-card { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.hover-glow-card  { transition: box-shadow 0.35s ease; }
+.hover-pulse-card { transition: box-shadow 0.35s ease; }
+
+.hover-lift-card:hover  { transform: translateY(-6px); }
+.hover-scale-card:hover { transform: scale(1.02); }
+/* box-shadow for glow - does NOT break backdrop-filter on children */
+.hover-glow-card:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--hover-effect-color, #e87fa0) 18%, transparent),
+    0 0 20px 4px color-mix(in srgb, var(--hover-effect-color, #e87fa0) 30%, transparent),
+    0 0 55px 12px color-mix(in srgb, var(--hover-effect-color, #e87fa0) 14%, transparent);
+}
+.hover-pulse-card:hover { animation: hover-pulse-glow 1.2s ease-in-out infinite; }
+.hover-shake-card:hover { animation: shake-x 0.3s linear 2; }
+
+@keyframes hover-pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--hover-effect-color, #e87fa0) 30%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 32px color-mix(in srgb, var(--hover-effect-color, #e87fa0) 55%, transparent),
+      0 0 60px color-mix(in srgb, var(--hover-effect-color, #e87fa0) 25%, transparent);
+  }
+}
+
+/* Sparkle effect animation */
+@keyframes sparkle-pulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Audio visualizer bars */
+@keyframes audioBar {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+
+button, [role="button"], a, input, select, textarea { touch-action: manipulation; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ═══════════════════════════════════════════════════════════
+   Design-system helpers (refined dark + pink)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Centered content column with fluid gutters */
+.ds-container {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Headline gradient: white settling into a whisper of accent */
+.text-gradient-accent {
+  background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--accent) 50%, #ffffff) 135%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hairline divider tuned to the new border tokens */
+.ds-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+/* Lock every Tabler icon to one stroke weight so icon weight reads
+   uniformly across the app, regardless of who set (or forgot) a stroke prop.
+   CSS stroke-width overrides the SVG's presentation attribute. */
+.tabler-icon { stroke-width: 1.75; }
+
+/* ═══ Marketing motion ═══════════════════════════════════════
+   CSS-driven so above-the-fold content animates on first paint -
+   no waiting on hydration or IntersectionObserver. */
+
+/* Entrance: fade + rise. `both` holds the start frame before the
+   delay elapses (no flash) and the end frame after (no snap-back).
+   Stagger with an inline animation-delay per element. */
+@keyframes ds-enter-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.ds-enter {
+  animation: ds-enter-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Gentle perpetual float so hero visuals never feel frozen */
+@keyframes ds-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+.ds-float { animation: ds-float 7s ease-in-out infinite; }
+
+/* Slow breathing on the accent glow behind the hero */
+@keyframes ds-glow-pulse {
+  0%, 100% { opacity: 0.65; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 1;    transform: translateX(-50%) scale(1.08); }
+}
+
+/* Now-playing equalizer bars */
+@keyframes ds-eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50%      { transform: scaleY(1); }
+}
+
+/* Smooth hover lift shared by marketing cards */
+.lift {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.3s ease;
+}
+.lift:hover { transform: translateY(-4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-enter, .ds-float { animation: none; }
+  .ds-enter { opacity: 1; transform: none; }
+  .lift:hover { transform: none; }
+}

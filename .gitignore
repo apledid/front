@@ -1,0 +1,23 @@
+# Claude worktrees (internal scratch spaces - not real code)
+.claude/worktrees/
+
+# v0 runtime files
+_v0_runtime_loader.js
+_v0_devtools.tsx
+_v0_jsx-dev-runtime.ts
+
+# Common ignores
+node_modules
+.next/
+.env
+.env*.local
+.DS_Store
+.vercel
+
+# Local scratch / build logs
+.scratch/
+batch-compress.log
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+# Loose PNGs in repo root (typically pasted badge/asset uploads)
+/*.png

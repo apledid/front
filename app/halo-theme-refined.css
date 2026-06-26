@@ -1,0 +1,487 @@
+/* ──────────────────────────────────────────────────────────────────────
+   halo-theme-refined.css
+   ──────────────────────────────────────────────────────────────────────
+   Refined polish overlay for the landing page. Targets the Linear /
+   Vercel marketing aesthetic - clean dark, restrained accent, real
+   typographic hierarchy. Still polished, just less "AI-default".
+
+   What the brutalist attempt got wrong (per user feedback):
+   - too sterile / dead
+   - monospace on everything was too coding-bro
+   - killing animations + glow removed the depth
+   - flattening pink gradient entirely was too far
+
+   What this overlay does instead (subtractive refinement, not teardown):
+   - Sans-serif (Inter) body, Syne kept for hero/headings.
+   - Pink (#e87fa0) preserved as a HIGHLIGHT - on the logo, on the rotator
+     word, on the primary CTA. Removed from places it was just paint
+     (eyebrows, footer credits, every secondary surface).
+   - Soft, single-direction gradients kept on the primary button only.
+     Gradient text kept on the rotator word; killed elsewhere.
+   - Animations preserved (ParallaxStars, GlowOrbs, hero-glow,
+     mockup-aura, ScrollReveal). They're what makes the page feel alive.
+   - Glassmorphism toned down: bg-white/0.04 instead of stacked white
+     surfaces, single 1px border at 10% opacity, smaller radius (10px).
+   - Real type scale: distinct sizes/weights for hero / h2 / eyebrow /
+     body / small. No more "everything is 14px medium".
+   - Buttons: smaller radius, no double-shadow + ring + gradient. Single
+     subtle inner highlight, clean hover.
+   - Section eyebrows: smaller, restrained color, no glow.
+
+   To toggle off: comment the import line in app/layout.tsx.
+   Scoped under .halo-theme so it only affects the landing wrapper.
+   ────────────────────────────────────────────────────────────────────── */
+
+.halo-theme {
+  --r-bg:           #0a0a0f;
+  --r-bg-card:      rgba(255, 255, 255, 0.025);
+  --r-bg-card-hi:   rgba(255, 255, 255, 0.045);
+  --r-text:         #ffffff;
+  --r-text-muted:   rgba(255, 255, 255, 0.62);
+  --r-text-dim:     rgba(255, 255, 255, 0.40);
+  --r-text-faint:   rgba(255, 255, 255, 0.22);
+  --r-border:       rgba(255, 255, 255, 0.08);
+  --r-border-hi:    rgba(255, 255, 255, 0.14);
+  --r-accent:       #e87fa0;
+  --r-accent-2:     #d66f90;
+  --r-accent-soft:  rgba(232, 127, 160, 0.12);
+
+  --r-font-sans:    'Inter', 'Geist Sans', -apple-system, system-ui, sans-serif;
+  --r-font-display: 'Syne', 'Inter', -apple-system, system-ui, sans-serif;
+  --r-font-mono:    'JetBrains Mono', 'Geist Mono', ui-monospace, monospace;
+
+  --r-radius-sm: 6px;
+  --r-radius:    10px;
+  --r-radius-lg: 14px;
+}
+
+/* Body default - clean Inter for everything except display/mono targets. */
+.halo-theme {
+  background: var(--r-bg) !important;
+  color: var(--r-text);
+  font-family: var(--r-font-sans) !important;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ──────── Kill the ambient color wash ──────── */
+/* The page had three giant blurred orbs in pink (#e87fa0), Discord
+   blue (#5865F2), and purple (#8b5cf6) drifting around the viewport.
+   Combined they read as the AI-default "ambient color wash" - exactly
+   what the user pointed at as making the site look vibe-coded. Just
+   hide them. The parallax-stars canvas also pulses pink across the
+   whole bg; dim it severely so it's barely-visible texture instead
+   of a glittery overlay. */
+.halo-theme .glow-orbs-container,
+.halo-theme .glow-orb {
+  display: none !important;
+}
+.halo-theme .parallax-stars {
+  opacity: 0.18 !important;
+}
+
+.halo-theme p,
+.halo-theme li,
+.halo-theme summary,
+.halo-theme input,
+.halo-theme button,
+.halo-theme a,
+.halo-theme span,
+.halo-theme div {
+  font-family: var(--r-font-sans);
+}
+
+/* ──────── Nav: cleaner, denser, less weight ──────── */
+.halo-theme .navbar {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+/* The actual visible container is .nav-inner. Original had it at
+   border-radius: 999px which is the floating-pill nav look - reads as
+   "AI-default modern SaaS". Drop to a soft 14px rounded rect so it
+   still has a defined shape but doesn't pill up. */
+.halo-theme .nav-inner {
+  border-radius: 14px !important;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: rgba(10, 10, 15, 0.72) !important;
+  border: 1px solid var(--r-border) !important;
+  box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.4) !important;
+}
+.halo-theme .nav-link {
+  font-family: var(--r-font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--r-text-muted) !important;
+  letter-spacing: -0.01em !important;
+  transition: color 0.15s ease !important;
+}
+.halo-theme .nav-link:hover {
+  color: var(--r-text) !important;
+  background: transparent !important;
+}
+.halo-theme .nav-divider {
+  color: var(--r-text-faint) !important;
+}
+.halo-theme .nav-logo {
+  font-family: var(--r-font-display) !important;
+  font-weight: 700 !important;
+}
+.halo-theme .logo-rip {
+  background: linear-gradient(180deg, #f290b0 0%, #d66f90 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.halo-theme .logo-dot {
+  color: var(--r-text-faint) !important;
+}
+
+/* ──────── Buttons: smaller radius, restrained ──────── */
+.halo-theme .btn {
+  font-family: var(--r-font-sans) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: -0.005em !important;
+  border-radius: var(--r-radius) !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+}
+/* Override the original .btn:hover { transform: translateY(-2px) }
+   bouncy lift. Linear/Vercel hover states don't move the button. */
+.halo-theme .btn:hover {
+  transform: none !important;
+}
+.halo-theme .btn-lg {
+  font-size: 15px !important;
+  padding: 12px 22px !important;
+}
+.halo-theme .btn-primary {
+  background: linear-gradient(180deg, #f290b0 0%, #d66f90 100%) !important;
+  color: #1a0a12 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 1px 2px rgba(232, 127, 160, 0.25) !important;
+}
+.halo-theme .btn-primary:hover {
+  filter: brightness(1.06);
+}
+.halo-theme .btn-ghost {
+  background: var(--r-bg-card) !important;
+  color: var(--r-text) !important;
+  border: 1px solid var(--r-border-hi) !important;
+  box-shadow: none !important;
+}
+.halo-theme .btn-ghost:hover {
+  background: var(--r-bg-card-hi) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+/* ──────── Nav auth buttons: dial down the prominence ──────── */
+/* Two side-by-side pill CTAs in the navbar (dashboard + my profile,
+   or sign in + claim handle) made the whole nav read as "marketing
+   page with sales buttons". Linear/Vercel solve this by having ONE
+   pill button and treating the secondary action as a quiet text link.
+   nav-auth-btn is the class on both, so we tighten via that. */
+.halo-theme .nav-auth-btn {
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+}
+.halo-theme .nav-auth-btn.btn-ghost {
+  /* Quieter than a card-tinted pill - just outlined text. */
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+.halo-theme .nav-auth-btn.btn-ghost:hover {
+  background: var(--r-bg-card) !important;
+  color: var(--r-text) !important;
+  border-color: var(--r-border-hi) !important;
+}
+.halo-theme .nav-auth-btn.btn-primary {
+  /* Smaller, less shadow-heavy version of the primary - still pink so
+     it reads as the CTA but doesn't shout next to a quiet ghost. */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 1px 1px rgba(232, 127, 160, 0.18) !important;
+}
+
+/* ──────── Hero: Inter for big lowercase display ──────── */
+/* Syne at weight 800 in lowercase has uneven stroke widths - the "y"
+   descenders are fatter than the "l" ascenders, the letter widths
+   don't agree, and at hero-size it reads as chunky/unappealing.
+   Inter at the same weight has consistent stroke proportions and
+   matches the cleaner Linear/Vercel marketing look the user wanted.
+   Tracking pulled tight to -0.05em to make the words feel decisive. */
+.halo-theme .hero-title {
+  font-family: var(--r-font-sans) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.052em !important;
+  line-height: 1.02 !important;
+  font-size: clamp(44px, 7.5vw, 92px) !important;
+  color: var(--r-text) !important;
+}
+.halo-theme .hero-title-gradient,
+.halo-theme .hero-rotator-word {
+  background: linear-gradient(120deg, #f290b0 0%, #d66f90 50%, #e87fa0 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+}
+.halo-theme .hero-sub {
+  font-family: var(--r-font-sans) !important;
+  font-size: 18px !important;
+  line-height: 1.55 !important;
+  color: var(--r-text-muted) !important;
+  max-width: 56ch;
+  letter-spacing: -0.005em !important;
+}
+
+/* Claim strip - inset terminal-ish but tasteful */
+.halo-theme .claim-frame {
+  background: var(--r-bg-card) !important;
+  border: 1px solid var(--r-border-hi) !important;
+  border-radius: var(--r-radius) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+.halo-theme .claim-prefix {
+  font-family: var(--r-font-mono) !important;
+  font-size: 14px !important;
+  color: var(--r-text-dim) !important;
+}
+.halo-theme .claim-input {
+  font-family: var(--r-font-mono) !important;
+  font-size: 14px !important;
+  color: var(--r-text) !important;
+}
+.halo-theme .claim-input::placeholder {
+  color: var(--r-text-faint) !important;
+}
+.halo-theme .claim-btn {
+  border-radius: var(--r-radius) !important;
+}
+
+/* Hero mockup: kill the pink frame and bright aura behind it.
+   The original had:
+   - .hero-mockup-aura: pink+purple radial gradient overlay
+   - .hero-mockup-img: 3px pink border + 22px rounded corners + a
+     rotateY(-16deg) 3D tilt
+   The pink border + aura read as "vibe-coded mockup decoration" -
+   that's literally what the user pointed at. Drop the aura to barely
+   visible, swap the pink stroke for a subtle white hairline, ease
+   the tilt slightly, smaller radius. */
+.halo-theme .hero-mockup-aura {
+  display: none !important;
+}
+.halo-theme .hero-mockup-img {
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7) !important;
+}
+.halo-theme .hero-mockup-inner {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* ──────── Sections: structured eyebrow + heading ──────── */
+.halo-theme .section-eyebrow {
+  font-family: var(--r-font-sans) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em !important;
+  color: var(--r-accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--r-accent) !important;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--r-accent-soft);
+  background: var(--r-accent-soft) !important;
+  -webkit-text-fill-color: var(--r-accent) !important;
+}
+.halo-theme .section-title {
+  font-family: var(--r-font-display) !important;
+  font-weight: 700 !important;
+  font-size: clamp(30px, 4vw, 46px) !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.05 !important;
+  color: var(--r-text) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--r-text) !important;
+}
+.halo-theme .section-sub {
+  font-family: var(--r-font-sans) !important;
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+  color: var(--r-text-muted) !important;
+  max-width: 60ch;
+  letter-spacing: -0.005em !important;
+}
+
+/* ──────── Cards: subtle borders, smaller radius ──────── */
+.halo-theme .hp-pricing-card,
+.halo-theme .faq-item,
+.halo-theme .hp-bg-tile,
+.halo-theme .platform-chip {
+  border-radius: var(--r-radius) !important;
+  background: var(--r-bg-card) !important;
+  border: 1px solid var(--r-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ──────── Pricing ──────── */
+.halo-theme .hp-pricing-card-premium {
+  border-color: var(--r-accent-soft) !important;
+  background: linear-gradient(180deg, rgba(232, 127, 160, 0.04) 0%, var(--r-bg-card) 100%) !important;
+}
+.halo-theme .hp-pricing-tag {
+  font-family: var(--r-font-sans) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  font-weight: 600 !important;
+  color: var(--r-text-muted) !important;
+  background: var(--r-bg-card-hi) !important;
+  border: 1px solid var(--r-border) !important;
+  border-radius: 999px !important;
+  padding: 4px 10px !important;
+}
+.halo-theme .hp-pricing-tag-premium {
+  color: var(--r-accent) !important;
+  background: var(--r-accent-soft) !important;
+  border-color: var(--r-accent-soft) !important;
+}
+.halo-theme .hp-pricing-price {
+  font-family: var(--r-font-display) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.035em !important;
+}
+.halo-theme .hp-pricing-price span {
+  font-family: var(--r-font-sans) !important;
+  font-weight: 500 !important;
+  color: var(--r-text-dim) !important;
+}
+.halo-theme .hp-pricing-list li {
+  font-family: var(--r-font-sans) !important;
+  color: var(--r-text-muted) !important;
+  line-height: 1.6 !important;
+}
+
+/* ──────── FAQ ──────── */
+.halo-theme .faq-q {
+  font-family: var(--r-font-sans) !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  letter-spacing: -0.01em !important;
+  color: var(--r-text) !important;
+}
+.halo-theme .faq-toggle {
+  font-family: var(--r-font-mono) !important;
+  color: var(--r-text-dim) !important;
+  font-weight: 500 !important;
+}
+.halo-theme .faq-a {
+  font-family: var(--r-font-sans) !important;
+  color: var(--r-text-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+/* ──────── Platforms marquee ──────── */
+.halo-theme .platform-chip {
+  font-family: var(--r-font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.005em !important;
+  color: var(--r-text) !important;
+}
+
+/* ──────── Showcase / feature lists ──────── */
+.halo-theme .hp-showcase-grid > * {
+  border-radius: var(--r-radius) !important;
+}
+.halo-theme .hp-feature-list span {
+  font-family: var(--r-font-sans) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  background: var(--r-bg-card) !important;
+  border: 1px solid var(--r-border) !important;
+  border-radius: 999px !important;
+  padding: 4px 10px !important;
+  color: var(--r-text-muted) !important;
+}
+
+/* ──────── Final CTA ──────── */
+/* Container was 600px wide originally; with a heavier 800-weight title
+   the words started wrapping at "ready to | make" which looked broken.
+   Widen the inner box and switch the title to Inter so the words sit
+   on the right number of lines. */
+.halo-theme .hp-final-inner {
+  border-radius: var(--r-radius-lg) !important;
+  background: linear-gradient(180deg, var(--r-bg-card-hi) 0%, var(--r-bg-card) 100%) !important;
+  border: 1px solid var(--r-border-hi) !important;
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.5) !important;
+  max-width: 760px !important;
+  padding: 56px 32px !important;
+}
+.halo-theme .hp-final-title {
+  font-family: var(--r-font-sans) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.045em !important;
+  line-height: 1.05 !important;
+  font-size: clamp(36px, 5vw, 58px) !important;
+  color: var(--r-text) !important;
+}
+.halo-theme .hp-final-sub {
+  font-family: var(--r-font-sans) !important;
+  color: var(--r-text-muted) !important;
+  font-size: 16px !important;
+}
+
+/* ──────── Footer ──────── */
+.halo-theme .site-footer {
+  border-top: 1px solid var(--r-border) !important;
+}
+.halo-theme .footer-col-title {
+  font-family: var(--r-font-sans) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em !important;
+  color: var(--r-text-dim) !important;
+}
+.halo-theme .footer-link {
+  font-family: var(--r-font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--r-text-muted) !important;
+  letter-spacing: -0.005em !important;
+}
+.halo-theme .footer-link:hover {
+  color: var(--r-text) !important;
+}
+.halo-theme .footer-tagline {
+  font-family: var(--r-font-sans) !important;
+  font-size: 14px !important;
+  color: var(--r-text-muted) !important;
+}
+.halo-theme .footer-meta,
+.halo-theme .footer-credit {
+  font-family: var(--r-font-sans) !important;
+  font-size: 12px !important;
+  color: var(--r-text-dim) !important;
+  letter-spacing: -0.005em !important;
+}
+.halo-theme .footer-rez {
+  color: var(--r-accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--r-accent) !important;
+  font-weight: 600;
+}
