@@ -69,8 +69,9 @@ export async function GET(
         const pathname = urlObj.searchParams.get('pathname')
 
         if (pathname && isValidPathname(pathname)) {
-          const fullPath = pathJoin(UPLOAD_ROOT, pathname)
-          if (pathResolve(fullPath).startsWith(pathResolve(UPLOAD_ROOT) + '/')) {
+          // Added turbopackIgnore comments below to allow compilation on Vercel
+          const fullPath = pathJoin(/*turbopackIgnore: true*/ UPLOAD_ROOT, pathname)
+          if (pathResolve(/*turbopackIgnore: true*/ fullPath).startsWith(pathResolve(/*turbopackIgnore: true*/ UPLOAD_ROOT) + '/')) {
             const fileStat = await stat(fullPath)
             if (fileStat.isFile()) {
               const contentType = getMimeTypeFromExtension(pathname) || 'image/jpeg'
@@ -179,25 +180,32 @@ export async function GET(
               return new NextResponse(buffer, {
                 headers: {
                   'Content-Type': contentType,
-                  'Content-Length': received.toString(),
                   'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
                 },
               })
             }
           }
-        } catch {
+        } catch (fetchErr) {
+          console.error('[og-image] fetch error:', fetchErr)
+        } finally {
           clearTimeout(timeoutId)
         }
       }
     }
-  } catch {
-    // fall through to fallback
-  }
 
-  return new NextResponse(FALLBACK_SVG, {
-    headers: {
-      'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=3600',
-    },
-  })
+    // Fallback response if file does not exist locally or cannot be securely proxied
+    return new NextResponse(FALLBACK_SVG, {
+      headers: {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+      },
+    })
+  } catch (error) {
+    return new NextResponse(FALLBACK_SVG, {
+      headers: {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'public, max-age=60',
+      },
+    })
+  }
 }
