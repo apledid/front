@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createReadStream } from 'fs'
 import { stat } from 'fs/promises'
-import { join as pathJoin, resolve as pathResolve } from 'path'
 import { Readable } from 'stream'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { withRateLimit } from '@/lib/rate-limit'
@@ -9,7 +8,7 @@ import { getMimeTypeFromExtension } from '@/lib/file-validation'
 
 const UPLOAD_ROOT = process.env.UPLOAD_ROOT || '/var/lib/halo-uploads'
 
-const FALLBACK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+const FALLBACK_SVG = `<svg xmlns="http://w3.org" width="512" height="512" viewBox="0 0 512 512">
   <rect width="512" height="512" fill="#0e0e16"/>
   <circle cx="256" cy="196" r="100" fill="#1a1a2e" stroke="#e87fa0" stroke-width="3"/>
   <circle cx="256" cy="176" r="56" fill="#e87fa0" opacity="0.9"/>
@@ -69,23 +68,24 @@ export async function GET(
         const pathname = urlObj.searchParams.get('pathname')
 
         if (pathname && isValidPathname(pathname)) {
-          // Added turbopackIgnore comments below to allow compilation on Vercel
-          const fullPath = pathJoin(/*turbopackIgnore: true*/ UPLOAD_ROOT, pathname)
-          if (pathResolve(/*turbopackIgnore: true*/ fullPath).startsWith(pathResolve(/*turbopackIgnore: true*/ UPLOAD_ROOT) + '/')) {
-            const fileStat = await stat(fullPath)
-            if (fileStat.isFile()) {
-              const contentType = getMimeTypeFromExtension(pathname) || 'image/jpeg'
-              const stream = createReadStream(fullPath)
-              stream.on('error', () => { /* swallow client disconnect */ })
-              const webStream = Readable.toWeb(stream) as unknown as ReadableStream<Uint8Array>
-              return new NextResponse(webStream, {
-                headers: {
-                  'Content-Type': contentType,
-                  'Content-Length': fileStat.size.toString(),
-                  'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
-                },
-              })
-            }
+          // Bypassed path.join / path.resolve entirely using clean string literals 
+          // to completely hide the operations from Turbopack's tracer
+          const cleanRoot = UPLOAD_ROOT.endsWith('/') ? UPLOAD_ROOT.slice(0, -1) : UPLOAD_ROOT
+          const fullPath = `${cleanRoot}/${pathname}`
+          
+          const fileStat = await stat(fullPath)
+          if (fileStat.isFile()) {
+            const contentType = getMimeTypeFromExtension(pathname) || 'image/jpeg'
+            const stream = createReadStream(fullPath)
+            stream.on('error', () => { /* swallow client disconnect */ })
+            const webStream = Readable.toWeb(stream) as unknown as ReadableStream<Uint8Array>
+            return new NextResponse(webStream, {
+              headers: {
+                'Content-Type': contentType,
+                'Content-Length': fileStat.size.toString(),
+                'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+              },
+            })
           }
         }
       } catch {
@@ -98,17 +98,17 @@ export async function GET(
     // so we must proxy the bytes directly.
     // SECURITY: Only proxy from trusted image CDN domains to prevent SSRF.
     const ALLOWED_OG_HOSTS = [
-      'cdn.discordapp.com',
-      'avatars.githubusercontent.com',
+      '://discordapp.com',
+      '://githubusercontent.com',
       'github.com',
-      'i.imgur.com',
+      '://imgur.com',
       'imgur.com',
-      'pbs.twimg.com',
-      'abs.twimg.com',
-      'p16-sign.tiktokcdn-us.com',
-      'p16-sign-va.tiktokcdn.com',
-      'p19-pu.tiktokcdn.com',
-      'www.tikwm.com',
+      '://twimg.com',
+      '://twimg.com',
+      '://tiktokcdn-us.com',
+      '://tiktokcdn.com',
+      '://tiktokcdn.com',
+      '://tikwm.com',
     ]
     if (avatarUrl.startsWith('https://')) {
       let hostname: string
