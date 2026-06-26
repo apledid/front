@@ -107,15 +107,17 @@ export async function POST(request: Request) {
 
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
     const pathname = `${type}/${profile.id}/${Date.now()}-${sanitizedName}`
-    const fullPath = pathJoin(UPLOAD_ROOT, pathname)
+    
+    // Added turbopackIgnore comments here to bypass Vercel's NFT full-project tracing error
+    const fullPath = pathJoin(/*turbopackIgnore: true*/ UPLOAD_ROOT, pathname)
 
-    // Traversal guard
-    if (!pathResolve(fullPath).startsWith(pathResolve(UPLOAD_ROOT) + '/')) {
+    // Traversal guard with turbopackIgnore comments added to prevent loose string analysis
+    if (!pathResolve(/*turbopackIgnore: true*/ fullPath).startsWith(pathResolve(/*turbopackIgnore: true*/ UPLOAD_ROOT) + '/')) {
       return NextResponse.json({ error: 'Invalid path' }, { status: 400 })
     }
 
     try {
-      await mkdir(pathJoin(fullPath, '..'), { recursive: true })
+      await mkdir(pathJoin(/*turbopackIgnore: true*/ fullPath, '..'), { recursive: true })
       await writeFile(fullPath, Buffer.from(fileBuffer))
     } catch (uploadError) {
       console.error('[upload] disk write error:', uploadError)
